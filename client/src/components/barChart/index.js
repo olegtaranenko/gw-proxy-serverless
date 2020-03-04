@@ -144,9 +144,9 @@ const renderLegend = props => {
         lineHeight: '20px',
       }}
     >
-      {legendData.map(legend => {
+      {legendData.map((legend, index) => {
         return (
-          <div style={{ color: legend.color, fontWeight: 'bold' }}>
+          <div key={index} style={{ color: legend.color, fontWeight: 'bold' }}>
             {legend.title}
           </div>
         );
