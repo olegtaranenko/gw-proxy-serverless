@@ -1,0 +1,28 @@
+service: pjsync
+
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  hello:
+    handler: handler.hello
+  pagerdutywebhook:
+    handler: webhooks.pagerduty
+    events:
+      - http:
+          path: pagerduty-webhook
+          method: post
+          integration: lambda
+
+plugins:
+  - serverless-python-requirements
+  - serverless-dotenv-plugin
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+package:
+  exclude:
+    - env/**
