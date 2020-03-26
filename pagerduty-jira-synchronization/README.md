@@ -44,6 +44,38 @@ atlassian root URL (e.g. https://username.atlassian.net) to
 `JIRA_SERVER_URL`. Put the key of your project to `JIRA_PROJECT_KEY`
 (you can find the key in the list of the existing projects).
 
+# AWS configuration
+
+Be sure you have a configured account on Amazon - AWS.
+
+If not done before, register new account on [AWS](https://aws.amazon.com/). 
+Good practice if you will use not root account for deploying the application
+After all required steps for creating finished, you need to create new user 
+in [AWS Console](https://console.aws.amazon.com/iam/home#/users). 
+Let name it **gwuser**. 
+
+Add admin permissions to the **gwuser** and then login to the AWS Console 
+under **gwuser** credentials [AWS Credential page](https://console.aws.amazon.com/iam/home?#/security_credentials).
+Generate new access key. Download generated file AccessKeys.csv
+
+Get back to the termanal and install _awscli_ utility via
+
+```pip instal awscli ```
+
+After that you can configure aws credential on you machine
+
+```aws configure```
+
+The screen should looks like
+
+```
+AWS Access Key ID [None]: AKIAI44QH8DHBEXAMPLE
+AWS Secret Access Key [None]: je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
+Default region name [None]: us-east-1
+Default output format [None]: text
+```
+
+
 # Deploy serverless application
 
 In order to deploy the application execute the following command:
