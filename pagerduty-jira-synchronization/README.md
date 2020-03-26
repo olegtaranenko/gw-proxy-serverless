@@ -15,7 +15,7 @@ cd pagerduty-jira-synchronization
 Make and activate a virtual environment:
 
 ```
-python -m env env
+python -m venv env
 source env/bin/activate
 ```
 
