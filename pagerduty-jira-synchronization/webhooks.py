@@ -1,4 +1,5 @@
 import os
+import json
 
 import db
 import utils
@@ -6,6 +7,14 @@ import utils
 
 P1_PRIORITY_NAME = 'P1'
 severity_field_id = None
+
+def jira(event):
+    """
+    A webhook function that handles creating or updating of the JIRA tickets.
+    """
+    print(json.dumps(event, indent=2, sort_keys=True))
+    return True
+
 
 
 def handle_triggered_incident(message):

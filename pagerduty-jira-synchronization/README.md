@@ -19,7 +19,11 @@ python -m venv env
 source env/bin/activate
 ```
 
-Install `serverless`:
+## Add python frameworks
+
+```pip instal -r requirements.txt```
+
+## Install `serverless`:
 
 ```
 npm install -g serverless
@@ -43,6 +47,7 @@ Copy `.env.example` to `.env` and edit it. Put your email to
 atlassian root URL (e.g. https://username.atlassian.net) to
 `JIRA_SERVER_URL`. Put the key of your project to `JIRA_PROJECT_KEY`
 (you can find the key in the list of the existing projects).
+
 
 # AWS configuration
 

@@ -13,6 +13,13 @@ logger.setLevel(logging.INFO)
 
 @app.route("/pagerduty-webhook", methods=["POST"])
 def pagerduty_webhook():
+    result = webhooks.pagerduty(request.json)
+    return jsonify({
+        'ok': result,
+    })
+
+@app.route("/pagerduty-webhook", methods=["POST"])
+def pagerduty_webhook():
     response = {'ok': True}
     try:
         webhooks.pagerduty(request.json)
