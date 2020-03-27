@@ -89,12 +89,14 @@ The command should output an endpoint URL, for instance:
 ```
 [...]
 endpoints:
-  POST - https://oqzgxd0euf.execute-api.us-east-1.amazonaws.com/dev/pagerduty-webhook
+  ANY - https://oqzgxd0euf.execute-api.us-east-1.amazonaws.com/dev
+  ANY - https://oqzgxd0euf.execute-api.us-east-1.amazonaws.com/dev/{proxy+}
 [...]
 
 ```
 
-This is an endpoint for a PagerDuty webhook.
+Append `/pagerduty-webhook` to the endpoint and use it as an URL for a
+PagerDuty webhook.
 
 # Configure PagerDuty webhook
 

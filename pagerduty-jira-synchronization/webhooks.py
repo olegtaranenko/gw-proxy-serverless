@@ -6,9 +6,9 @@ from jira import JIRA
 P1_PRIORITY_NAME = 'P1'
 
 
-def pagerduty(event, context):
+def pagerduty(event):
     """
-    A webhook function that should be used by PagerDuty.
+    A webhook that should be used by PagerDuty.
     """
     options = {
         'server': os.environ['JIRA_SERVER_URL'],
@@ -19,7 +19,7 @@ def pagerduty(event, context):
     )
     jira = JIRA(options, basic_auth=basic_auth)
     severity_field_id = None
-    messages = event.get('body', {}).get('messages', [])
+    messages = event.get('messages', [])
     for message in messages:
         if message.get('event') != 'incident.trigger':
             # Ignore all incidents except newly created/triggered.
