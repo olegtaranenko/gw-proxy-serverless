@@ -24,3 +24,13 @@ def put_incident(incident_id, issue_id):
             'issueId': {'S': issue_id },
         }
     )
+
+
+def put_incident_issue_relation(incident_id, issue_id):
+    return client.put_item(
+        TableName=INCIDENTS_TABLE,
+        Item={
+            'incidentId': {'S': incident_id },
+            'issueId': {'S': issue_id },
+        }
+    )

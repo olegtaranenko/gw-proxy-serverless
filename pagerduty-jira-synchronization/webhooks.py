@@ -47,4 +47,4 @@ def pagerduty(event):
             if severity_field_id:
                 issue_dict[severity_field_id] = {'value': severity_field_value}
             issue = jira.create_issue(fields=issue_dict)
-            db.put_incident(incident['id'], issue.id)
+            db.put_incident_issue_relation(incident['id'], issue.id)
