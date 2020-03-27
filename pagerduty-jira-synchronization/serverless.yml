@@ -60,12 +60,12 @@ resources:
         AttributeDefinitions:
           - AttributeName: incidentId
             AttributeType: S
-          - AttributeName: issueId
+          - AttributeName: issueKey
             AttributeType: S
         KeySchema:
           - AttributeName: incidentId
             KeyType: HASH
-          - AttributeName: issueId
+          - AttributeName: issueKey
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1

@@ -26,25 +26,25 @@ def put_incident(incident_id, issue_id):
     )
 
 
-def put_incident_issue_relation(incident_id, issue_id):
+def put_incident_issue_relation(incident_id, issue_key):
     return client.put_item(
         TableName=INCIDENTS_TABLE,
         Item={
             'incidentId': {'S': incident_id },
-            'issueId': {'S': issue_id },
+            'issueKey': {'S': issue_key },
         }
     )
 
 
-def get_issue_by_incident_id(incident_id):
-    resp = client.get_item(
-        TableName=INCIDENTS_TABLE,
-        Key={
-            'incidentId': {
+def get_issue_key_by_incident_id(incident_id):
+    response = client.query(
+        ExpressionAttributeValues={
+            ':incident_id': {
                 'S': incident_id,
-            }
-        }
+            },
+        },
+        KeyConditionExpression='incidentId = :incident_id',
+        TableName=INCIDENTS_TABLE,
     )
-    item = resp.get('Item')
-    if item:
-        return item.get('issueId').get('S')
+    if response.get('Count', 0) > 0:
+        return response.get('Items', [{}])[0].get('issueKey', {}).get('S')
