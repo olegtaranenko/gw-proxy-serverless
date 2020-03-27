@@ -21,3 +21,6 @@ var/
 
 # serverless-dotenv-plugin
 .env
+
+# serverless-dynamodb-local
+.dynamodb

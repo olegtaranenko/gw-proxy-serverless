@@ -2,6 +2,8 @@ import os
 
 from jira import JIRA
 
+import db
+
 
 P1_PRIORITY_NAME = 'P1'
 
@@ -44,4 +46,5 @@ def pagerduty(event):
             }
             if severity_field_id:
                 issue_dict[severity_field_id] = {'value': severity_field_value}
-            jira.create_issue(fields=issue_dict)
+            issue = jira.create_issue(fields=issue_dict)
+            db.put_incident(incident['id'], issue.id)
