@@ -34,3 +34,17 @@ def put_incident_issue_relation(incident_id, issue_id):
             'issueId': {'S': issue_id },
         }
     )
+
+
+def get_issue_by_incident_id(incident_id):
+    resp = client.get_item(
+        TableName=INCIDENTS_TABLE,
+        Key={
+            'incidentId': {
+                'S': incident_id,
+            }
+        }
+    )
+    item = resp.get('Item')
+    if item:
+        return item.get('issueId').get('S')

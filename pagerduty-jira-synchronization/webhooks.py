@@ -35,6 +35,15 @@ def handle_triggered_incident(message):
         db.put_incident_issue_relation(incident['id'], issue.id)
 
 
+def handle_resolved_incident(message):
+    incident = message.get('incident')
+    issue_id = db.get_issue_by_incident_id(incident['id'])
+    if issue_id is not None:
+        jira = utils.get_jira()
+        issue = jira.issue(issue_id)
+        jira.transition_issue(issue, '5', resolution={'name': 'Done'})
+
+
 def pagerduty(event):
     """
     A webhook that should be used by PagerDuty.
@@ -43,3 +52,5 @@ def pagerduty(event):
     for message in messages:
         if message.get('event') == 'incident.trigger':
             handle_triggered_incident(message)
+        elif message.get('event') == 'incident.resolve':
+            handle_resolved_incident(message)
