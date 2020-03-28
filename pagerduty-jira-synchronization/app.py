@@ -3,20 +3,13 @@ import logging
 
 from flask import Flask, jsonify, request
 
-import webhooks
+import webhooks, jirawebhook
 
 
 app = Flask(__name__)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-
-@app.route("/pagerduty-webhook", methods=["POST"])
-def pagerduty_webhook():
-    result = webhooks.pagerduty(request.json)
-    return jsonify({
-        'ok': result,
-    })
 
 @app.route("/pagerduty-webhook", methods=["POST"])
 def pagerduty_webhook():
@@ -31,3 +24,12 @@ def pagerduty_webhook():
             'error': repr(e),
         }
     return jsonify(response)
+
+
+@app.route("/jira-webhook", methods=["POST"])
+def jira_webhook():
+    result = webhooks.jira(request.json)
+    return jsonify({
+        'ok': result,
+    })
+

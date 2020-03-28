@@ -8,20 +8,11 @@ import utils
 P1_PRIORITY_NAME = 'P1'
 severity_field_id = None
 
-def jira(event):
-    """
-    A webhook function that handles creating or updating of the JIRA tickets.
-    """
-    print(json.dumps(event, indent=2, sort_keys=True))
-    return True
-
-
-
 def handle_triggered_incident(message):
     global severity_field_id
     jira = utils.get_jira()
     incident = message.get('incident')
-    if incident.get('priority', {}).get('name') != P1_PRIORITY_NAME:
+    if incident is None or incident.get('priority', {}).get('name') != P1_PRIORITY_NAME:
         # Skip all incidents except with P1 priority.
         return
     if severity_field_id is None:
