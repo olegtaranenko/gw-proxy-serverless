@@ -50,18 +50,6 @@ def get_issue_key_by_incident_id(incident_id):
 
 def get_incident_id_by_issue_key(issue_key):
     table = resource.Table(INCIDENTS_TABLE)
-    response = table.scan(FilterExpression=Attr('issueKey').eq(issue_key)
-    )
-    # response = client.scan(
-    #     TableName=INCIDENTS_TABLE,
-    #     ExpressionAttributeValues={
-    #         ':issue_key': {
-    #             'S': issue_key,
-    #         },
-    #     },
-    #     FilterExpression='issueKey = :issue_key'
-    # )
+    response = table.scan(FilterExpression=Attr('issueKey').eq(issue_key))
     if response.get('Count', 0) > 0:
-        incident_id = response.get('Items')[0].get('incidentId')
-        # print('incident_id', incident_id, )
-        return incident_id
+        return response.get('Items')[0].get('incidentId')

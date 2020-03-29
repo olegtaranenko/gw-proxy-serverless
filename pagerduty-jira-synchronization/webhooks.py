@@ -12,9 +12,8 @@ def handle_triggered_incident(message):
     global severity_field_id
     incident = message.get('incident', {})
     print('incident status:', incident.get('status'))
-    if incident.get('priority', {}).get('name') != P1_PRIORITY_NAME or \
-            incident.get('status') == 'resolved':
-        # Skip all incidents except unresolved and with P1 priority.
+    if incident.get('priority', {}).get('name') != P1_PRIORITY_NAME:
+        # Skip all incidents except with P1 priority.
         return
     jira = utils.get_jira()
     if severity_field_id is None:
