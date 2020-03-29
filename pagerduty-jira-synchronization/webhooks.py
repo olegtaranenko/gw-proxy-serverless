@@ -4,17 +4,19 @@ import json
 import db
 import utils
 
-
 P1_PRIORITY_NAME = 'P1'
 severity_field_id = None
 
+
 def handle_triggered_incident(message):
     global severity_field_id
-    jira = utils.get_jira()
-    incident = message.get('incident')
-    if incident is None or incident.get('priority', {}).get('name') != P1_PRIORITY_NAME:
-        # Skip all incidents except with P1 priority.
+    incident = message.get('incident', {})
+    print('incident status:', incident.get('status'))
+    if incident.get('priority', {}).get('name') != P1_PRIORITY_NAME or \
+            incident.get('status') == 'resolved':
+        # Skip all incidents except unresolved and with P1 priority.
         return
+    jira = utils.get_jira()
     if severity_field_id is None:
         fields = jira.fields()
         severity_fields = [f for f in fields if f['name'] == 'Severity']

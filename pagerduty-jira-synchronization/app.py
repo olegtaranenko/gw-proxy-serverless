@@ -5,7 +5,6 @@ from flask import Flask, jsonify, request
 
 import webhooks, jirawebhook
 
-
 app = Flask(__name__)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -28,8 +27,14 @@ def pagerduty_webhook():
 
 @app.route("/jira-webhook", methods=["POST"])
 def jira_webhook():
-    result = webhooks.jira(request.json)
-    return jsonify({
-        'ok': result,
-    })
-
+    response = {'ok': True}
+    try:
+        jirawebhook.jira(request.json)
+    except Exception as e:
+        logger.exception(
+            'Error occured during processing of a Jira webhook')
+        response = {
+            'ok': False,
+            'error': repr(e),
+        }
+    return jsonify(response)

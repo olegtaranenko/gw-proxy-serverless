@@ -125,12 +125,12 @@ when a new incident is created.
 
 #Local Development
 
-For agile development good idea to setup development local-based environment, 
-which complete resembling the production, based on serverless/AWS stack.    
+For agile development good idea to setup development local-based environment,
+which complete resembling the production, based on serverless/AWS stack.
 
 ## Run database instance
 
-Run the database instance locally on http://localhost:8002 
+Run the database instance locally on http://localhost:8002
 
 ```sls dynamodb start```
 
@@ -139,7 +139,7 @@ For checking the db is up and running open in browser http://localhost:8002/shel
 
 ## Run application local
 
-The command runs flask-base http server on 5000 port locally on the development machine. 
+The command runs flask-base http server on 5000 port locally on the development machine.
 
 ```sls wsgi serve```
 
@@ -152,19 +152,20 @@ Download [Ngrok](https://ngrok.com), the brilliant solution for that.
 
 ```ngrok http 5000```
 
-If you register your instance on the **Ngrok** site, you may get following screen. 
+
+If you register your instance on the **Ngrok** site, you may get following screen.
 
 ```
-Session Status                online                                                                                                                                                               
-Account                       Upwork Developer (Plan: Free)                                                                                                                                          
-Version                       2.3.35                                                                                                                                                               
-Region                        United States (us)                                                                                                                                                   
-Web Interface                 http://127.0.0.1:4040                                                                                                                                                
-Forwarding                    http://9d0af513.ngrok.io -> http://localhost:5000                                                                                                                    
+Session Status                online
+Account                       Upwork Developer (Plan: Free)
+Version                       2.3.35
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4040
+Forwarding                    http://9d0af513.ngrok.io -> http://localhost:5000
 Forwarding                    https://9d0af513.ngrok.io -> http://localhost:5000
 
-Replace webhook URL on the PagerDuty site with generated link https://9d0af513.ngrok.io 
-and now PagerDuty instance will trigger your local environment, rather then deployed 
+Replace webhook URL on the PagerDuty site with generated link https://9d0af513.ngrok.io
+and now PagerDuty instance will trigger your local environment, rather then deployed
 to the Amazon Lambda service.
 ```
  
