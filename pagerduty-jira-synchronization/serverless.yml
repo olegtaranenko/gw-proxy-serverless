@@ -70,3 +70,22 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: issueKey
+            Projection:
+              ProjectionType: ALL
+            KeySchema:
+              - AttributeName: issueKey
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+          - IndexName: incidentId
+            Projection:
+              ProjectionType: ALL
+            KeySchema:
+              - AttributeName: incidentId
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
