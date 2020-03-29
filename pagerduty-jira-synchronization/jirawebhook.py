@@ -23,8 +23,10 @@ def jira(event):
     if has_done:
         issue_key = event.get('issue', {}).get('key')
     if issue_key is not None:
-        incident_key = db.get_incident_id_by_issue_key(issue_key)
-        pagerduty = utils.get_pagerduty()
-        pagerduty.rput(INCIDENT_ENDPOINT, json=[{
-            'id': incident_key, 'type': 'incident', 'status': 'resolved'
-        }])
+        incident_id = db.get_incident_id_by_issue_key(issue_key)
+        if incident_id is not None:
+            pagerduty = utils.get_pagerduty()
+            db.delete_relation_by_incident_id(incident_id)
+            pagerduty.rput(INCIDENT_ENDPOINT, json=[{
+                'id': incident_id, 'type': 'incident', 'status': 'resolved'
+            }])

@@ -11,7 +11,6 @@ severity_field_id = None
 def handle_triggered_incident(message):
     global severity_field_id
     incident = message.get('incident', {})
-    print('incident status:', incident.get('status'))
     if incident.get('priority', {}).get('name') != P1_PRIORITY_NAME:
         # Skip all incidents except with P1 priority.
         return
@@ -44,6 +43,7 @@ def handle_resolved_incident(message):
         issue = jira.issue(issue_key)
         done_transition_ids = [
             t['id'] for t in jira.transitions(issue) if t['name'] == 'Done']
+        db.delete_relation_by_issue_key(issue_key)
         if done_transition_ids:
             jira.transition_issue(issue, done_transition_ids[0])
 

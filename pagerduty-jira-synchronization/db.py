@@ -19,7 +19,6 @@ else:
 def put_incident_issue_relation(incident_id, issue_key):
     incidents = resource.Table(INCIDENTS_TABLE)
     return incidents.put_item(
-        TableName=INCIDENTS_TABLE,
         Item={
             'incidentId': incident_id,
             'issueKey': issue_key,
@@ -45,3 +44,29 @@ def get_incident_id_by_issue_key(issue_key):
     )
     if response.get('Count', 0) > 0:
         return response.get('Items')[0].get('incidentId')
+
+
+def delete_relation_by_incident_id(incident_id):
+    incidents = resource.Table(INCIDENTS_TABLE)
+    response = incidents.query(
+        IndexName='incidentId',
+        KeyConditionExpression=Key('incidentId').eq(incident_id)
+    )
+    items = response.get('Items')
+    if items:
+        incidents.delete_item(
+            Key=items[0]
+        )
+
+
+def delete_relation_by_issue_key(issue_key):
+    incidents = resource.Table(INCIDENTS_TABLE)
+    response = incidents.query(
+        IndexName='issueKey',
+        KeyConditionExpression=Key('issueKey').eq(issue_key)
+    )
+    items = response.get('Items')
+    if items:
+        incidents.delete_item(
+            Key=items[0]
+        )
