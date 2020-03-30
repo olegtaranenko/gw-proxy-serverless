@@ -45,7 +45,14 @@ def handle_resolved_incident(message):
             t['id'] for t in jira.transitions(issue) if t['name'] == 'Done']
         db.delete_relation_by_issue_key(issue_key)
         if done_transition_ids:
-            jira.transition_issue(issue, done_transition_ids[0])
+            try:
+                jira.transition_issue(issue, done_transition_ids[0])
+            except Exception as e:
+                # Restore relation if something goes wrong
+                is_exists = db.get_issue_key_by_incident_id(incident['id'])
+                if is_exists is None:
+                    db.put_incident_issue_relation(incident['id'], issue_key)
+                raise e
 
 
 def pagerduty(event):

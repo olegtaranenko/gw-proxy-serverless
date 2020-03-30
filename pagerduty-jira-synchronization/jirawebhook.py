@@ -27,6 +27,13 @@ def jira(event):
         if incident_id is not None:
             pagerduty = utils.get_pagerduty()
             db.delete_relation_by_incident_id(incident_id)
-            pagerduty.rput(INCIDENT_ENDPOINT, json=[{
-                'id': incident_id, 'type': 'incident', 'status': 'resolved'
-            }])
+            try:
+                pagerduty.rput(INCIDENT_ENDPOINT, json=[{
+                    'id': incident_id, 'type': 'incident', 'status': 'resolved'
+                }])
+            except Exception as e:
+                # Restore relation if something goes wrong
+                is_exists = db.get_incident_id_by_issue_key(issue_key)
+                if is_exists is None:
+                    db.put_incident_issue_relation(incident_id, issue_key)
+                raise e
